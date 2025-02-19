@@ -1,29 +1,38 @@
-# Citation Helper Chrome Extension
+# SnapCite v1.0
 
-## Overview
-Citation Helper is a Chrome extension designed to make research citations easy for students and researchers. This tool helps you generate, manage, and export citations while browsing the web.
-
-🚧 **Note: This project is still in development** 🚧
+A Chrome extension for quick and easy citation generation. SnapCite automatically extracts metadata from web pages and generates properly formatted citations in multiple academic styles.
 
 ## Features
-- Generate citations from web pages with one click
-- Support for multiple citation styles (APA, MLA, Chicago, Harvard)
-- Save and organize your citations for different projects
-- Extract citation data from PDFs
-- Easy access through right-click menu
 
-## How It Works
-1. Browse to any research article, book page, or scholarly source
-2. Click the Citation Helper icon or use the right-click menu
-3. Select your preferred citation format
-4. Save the citation to your collection or copy it directly
+- 🚀 One-click citation generation
+- 📝 Multiple citation formats (APA, MLA, Chicago, Harvard)
+- 💾 Save citations for later use
+- 🖱️ Right-click menu integration
+- 🎯 Automatic metadata extraction
+- 📱 Clean, modern interface
 
 ## Installation
-As this extension is still in development, you can test it by:
-1. Download this repository
-2. Go to `chrome://extensions/` in Chrome
-3. Enable "Developer mode" (top right)
-4. Click "Load unpacked" and select the downloaded folder
+
+1. Download the extension from the Chrome Web Store (coming soon)
+2. Or install manually:
+   - Clone this repository
+   - Open Chrome and go to `chrome://extensions/`
+   - Enable "Developer mode"
+   - Click "Load unpacked" and select the extension directory
+
+## Usage
+
+1. Click the SnapCite icon or use right-click menu on any webpage
+2. Select your desired citation format
+3. Copy or save the generated citation
+4. Manage your saved citations within the extension
+
+## Tech Stack
+
+- HTML/CSS/JavaScript
+- Tailwind CSS v4.0.6
+- Chrome Extension APIs (Manifest V3)
+- Node.js + npm
 
 ## Planned Features
 - Export bibliographies to Word and Google Docs
@@ -32,11 +41,10 @@ As this extension is still in development, you can test it by:
 - Integration with reference management systems
 - Better support for non-English content
 
-## Contributing
-We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines.
 
-## Privacy
-This extension only accesses page data when you request a citation. We do not track browsing history or store personal data.
+## Author
+
+[AaronClaude](https://github.com/AaronClaude)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
