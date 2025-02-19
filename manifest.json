@@ -3,11 +3,14 @@
     "name": "Citation Helper",
     "version": "1.0",
     "description": "Extracts citation data from webpages",
-    "permissions": ["activeTab", "scripting", "storage"],
+    "permissions": ["activeTab", "scripting", "storage", "contextMenus"],
     "content_scripts": [{
       "matches": ["<all_urls>"],
       "js": ["src/content.js"]
     }],
+    "background": {
+      "service_worker": "src/background.js"
+    },
     "web_accessible_resources": [{
       "resources": ["exportHandler.js"],
       "matches": ["<all_urls>"]
