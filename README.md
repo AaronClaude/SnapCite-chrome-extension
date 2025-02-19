@@ -3,11 +3,6 @@
 A Chrome extension for quick and easy citation generation. SnapCite automatically extracts metadata from web pages and generates properly formatted citations in multiple academic styles.
 
 
-
-https://github.com/user-attachments/assets/b2aae3b3-f44b-4edf-80e6-44f485180110
-
-
-
 ## Features
 
 - 🚀 One-click citation generation
