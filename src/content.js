@@ -1,25 +1,118 @@
 (function() {
     // Extract citation data from the current webpage
     function getCitationData() {
-      try {
-        // Get the page title
-        const titleElem = document.querySelector("title");
-        const title = titleElem ? titleElem.innerText : document.title;
-  
-        // Get meta description (if available)
-        const metaDesc = document.querySelector('meta[name="description"]');
-        const description = metaDesc ? metaDesc.getAttribute("content") : "";
-  
-        // Get meta author (if available)
-        const metaAuthor = document.querySelector('meta[name="author"]');
-        const author = metaAuthor ? metaAuthor.getAttribute("content") : "";
-  
-        console.log("Citation data extracted:", { title, description, author });
-        return { title, description, author };
-      } catch (error) {
-        console.error("Error extracting citation data:", error);
-        return { title: "", description: "", author: "" };
-      }
+        try {
+            // Title - try multiple sources
+            const title = 
+                document.querySelector('meta[property="og:title"]')?.getAttribute("content") ||
+                document.querySelector('meta[name="twitter:title"]')?.getAttribute("content") ||
+                document.querySelector('h1')?.innerText ||
+                document.querySelector("title")?.innerText ||
+                document.title;
+
+            // Authors - try multiple methods
+            let authors = [];
+            // Schema.org metadata
+            const schemaScript = document.querySelector('script[type="application/ld+json"]');
+            if (schemaScript) {
+                try {
+                    const schema = JSON.parse(schemaScript.textContent);
+                    if (schema.author) {
+                        authors = Array.isArray(schema.author) ? 
+                            schema.author.map(a => a.name || a) : 
+                            [schema.author.name || schema.author];
+                    }
+                } catch (e) {}
+            }
+
+            // Fallback to meta tags and common selectors if no authors found
+            if (authors.length === 0) {
+                const authorSelectors = [
+                    'meta[name="author"]',
+                    'meta[property="article:author"]',
+                    'meta[name="citation_author"]',
+                    '.author',
+                    '.byline',
+                    '[rel="author"]',
+                    '[itemprop="author"]'
+                ];
+
+                authors = [...new Set(
+                    authorSelectors.flatMap(selector => 
+                        Array.from(document.querySelectorAll(selector))
+                            .map(el => el.getAttribute("content") || el.innerText)
+                            .filter(Boolean)
+                    )
+                )];
+            }
+
+            // Publication Date
+            const publishedDate = 
+                document.querySelector('meta[property="article:published_time"]')?.getAttribute("content") ||
+                document.querySelector('meta[name="citation_publication_date"]')?.getAttribute("content") ||
+                document.querySelector('meta[name="publication_date"]')?.getAttribute("content") ||
+                document.querySelector('time[datetime]')?.getAttribute("datetime") ||
+                document.querySelector('time[pubdate]')?.getAttribute("datetime") ||
+                document.querySelector('[itemprop="datePublished"]')?.getAttribute("content");
+
+            // Publisher/Journal/Website Name
+            const publisher = 
+                document.querySelector('meta[property="og:site_name"]')?.getAttribute("content") ||
+                document.querySelector('meta[name="citation_journal_title"]')?.getAttribute("content") ||
+                document.querySelector('[itemprop="publisher"] [itemprop="name"]')?.content ||
+                new URL(window.location.href).hostname.replace(/^www\./, '');
+
+            // DOI
+            const doi = 
+                document.querySelector('meta[name="citation_doi"]')?.getAttribute("content") ||
+                document.querySelector('[data-doi]')?.getAttribute("data-doi") ||
+                document.querySelector('.doi')?.textContent?.match(/10\.\d{4,}\/[-._;()\/:A-Z0-9]+/i)?.[0];
+
+            // Volume, Issue, Pages
+            const volume = document.querySelector('meta[name="citation_volume"]')?.getAttribute("content");
+            const issue = document.querySelector('meta[name="citation_issue"]')?.getAttribute("content");
+            const pages = 
+                `${document.querySelector('meta[name="citation_firstpage"]')?.getAttribute("content") || ''}${
+                    document.querySelector('meta[name="citation_lastpage"]')?.getAttribute("content") ? 
+                    '-' + document.querySelector('meta[name="citation_lastpage"]')?.getAttribute("content") : 
+                    ''
+                }`;
+
+            return {
+                title,
+                authors,
+                publishedDate: publishedDate ? new Date(publishedDate).toISOString() : null,
+                publisher,
+                doi,
+                volume,
+                issue,
+                pages,
+                url: window.location.href,
+                siteName: publisher,
+                // Additional metadata for academic papers
+                abstract: document.querySelector('meta[name="citation_abstract"]')?.getAttribute("content") ||
+                         document.querySelector('meta[name="description"]')?.getAttribute("content"),
+                keywords: document.querySelector('meta[name="keywords"]')?.getAttribute("content")?.split(',').map(k => k.trim()),
+                language: document.querySelector('html')?.getAttribute('lang') || 'en'
+            };
+        } catch (error) {
+            console.error("Error extracting citation data:", error);
+            return {
+                title: "",
+                authors: [],
+                publishedDate: null,
+                publisher: "",
+                doi: "",
+                volume: "",
+                issue: "",
+                pages: "",
+                url: window.location.href,
+                siteName: "",
+                abstract: "",
+                keywords: [],
+                language: 'en'
+            };
+        }
     }
   
     // Listen for messages from the popup
