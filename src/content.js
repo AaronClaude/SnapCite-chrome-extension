@@ -2,6 +2,14 @@
     // Extract citation data from the current webpage
     function getCitationData() {
         try {
+            // Check if current page is PDF
+            if (document.contentType === 'application/pdf' || window.location.href.toLowerCase().endsWith('.pdf')) {
+                return {
+                    isPDF: true,
+                    url: window.location.href
+                };
+            }
+
             // Title - try multiple sources
             const title = 
                 document.querySelector('meta[property="og:title"]')?.getAttribute("content") ||

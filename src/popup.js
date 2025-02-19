@@ -90,11 +90,32 @@ document.addEventListener("DOMContentLoaded", function () {
                 function: getCitationData,
             });
 
-            chrome.tabs.sendMessage(tabs[0].id, { action: "getCitationData" }, function (response) {
+            chrome.tabs.sendMessage(tabs[0].id, { action: "getCitationData" }, async function (response) {
                 if (chrome.runtime.lastError) {
                     citationDiv.innerText = "Error loading citation data";
                     return;
                 }
+
+                // Handle PDF files
+                if (response.data.isPDF) {
+                    citationDiv.innerText = "Extracting PDF metadata...";
+                    try {
+                        const pdfMetadata = await extractPDFMetadata(response.data.url);
+                        if (pdfMetadata) {
+                            currentData = {
+                                ...pdfMetadata,
+                                siteName: new URL(tabs[0].url).hostname
+                            };
+                            citationDiv.innerText = formatCitation(currentData, formatSelector.value);
+                        } else {
+                            citationDiv.innerText = "Could not extract PDF metadata";
+                        }
+                    } catch (error) {
+                        citationDiv.innerText = "Error processing PDF";
+                    }
+                    return;
+                }
+
                 currentData = {
                     ...response.data,
                     url: tabs[0].url,
