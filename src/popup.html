@@ -4,19 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Citation Helper</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Tailwind CSS CDN -->
   <link rel="stylesheet" href="output.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    }
+  </style>
   <script src="pdfHandler.js" defer></script>
   <script src="popup.js" defer></script>
 </head>
-<body class="bg-gray-50 p-4">
-  <div class="max-w-sm mx-auto bg-white shadow-md rounded-lg p-6">
-    <h1 class="text-xl font-bold mb-4 text-center">Citation Quick</h1>
+<body class="bg-slate-50 p-4 min-w-[400px]">
+  <div class="max-w-sm mx-auto bg-white shadow-lg rounded-xl p-6 space-y-6">
+    <h1 class="text-2xl font-bold text-center text-slate-800">Citation Quick</h1>
     
+    <h3 class="font-semibold mt-3 -mb-1 text-slate-800">Select Citation Format</h2>
+
     <!-- Citation Format Selector -->
-    <div class="mb-4">
-      <select id="formatSelector" class="w-full p-2 border rounded-md bg-white">
+    <div>
+      <select id="formatSelector" class="w-full p-2.5 mt-3 border border-slate-200 rounded-lg bg-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none cursor-pointer transition-all duration-200">
         <option value="APA">APA</option>
         <option value="MLA">MLA</option>
         <option value="Chicago">Chicago</option>
@@ -25,27 +35,27 @@
     </div>
 
     <!-- Citation Display -->
-    <div id="citation" class="text-gray-800 p-3 border rounded-md bg-gray-50 min-h-[100px] break-words">
+    <div id="citation" class="text-slate-700 p-4 border border-slate-200 rounded-lg bg-slate-50 min-h-[120px] break-words shadow-inner">
       Loading citation...
     </div>
 
     <!-- Buttons -->
-    <div class="flex gap-2 mt-4">
-      <button id="copyBtn" class="flex-1 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors">
+    <div class="flex gap-3">
+      <button id="copyBtn" class="flex-1 bg-blue-500 text-white py-2.5 px-4 rounded-4xl hover:bg-blue-600 transition-all duration-200 shadow-sm hover:shadow-md active:scale-95 cursor-pointer">
         Copy Citation
       </button>
-      <button id="saveBtn" class="flex-1 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition-colors">
+      <button id="saveBtn" class="flex-1 bg-green-500 text-white py-2.5 px-4 rounded-4xl hover:bg-green-600 transition-all duration-200 shadow-sm hover:shadow-md active:scale-95 cursor-pointer">
         Save Citation
       </button>
     </div>
 
     <!-- Saved Citations -->
-    <div class="mt-4 pt-4 border-t">
-      <div class="flex justify-between items-center mb-2">
-        <h2 class="font-semibold">Saved Citations</h2>
-        <button id="clearBtn" class="text-sm text-red-500 hover:text-red-600">Clear All</button>
+    <div class="pt-6 border-t border-slate-200">
+      <div class="flex justify-between items-center mb-3">
+        <h2 class="font-semibold text-slate-700">Saved Citations</h2>
+        <button id="clearBtn" class="text-sm text-red-500 hover:text-red-600 hover:underline transition-colors cursor-pointer">Clear All</button>
       </div>
-      <div id="savedCitations" class="max-h-40 overflow-y-auto">
+      <div id="savedCitations" class="max-h-48 overflow-y-auto rounded-lg border border-slate-200 divide-y divide-slate-200 bg-gray-200 transition-all duration-300">
         <!-- Saved citations will be inserted here -->
       </div>
     </div>
