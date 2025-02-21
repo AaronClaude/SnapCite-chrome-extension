@@ -1,0 +1,50 @@
+# SnapCite Feature Roadmap
+
+Manual Citation Editor:
+  ☐ Add edit button next to citations
+  ☐ Create editable fields (title, authors, date, publisher, DOI)
+  ☐ Add save/cancel buttons for edit mode
+  ☐ Store original metadata alongside edited version
+  ☐ Add visual feedback for edited citations
+  ☐ Add "Reset to Original" option
+
+Citation Groups/Tags:
+  ☐ Add tag input field when saving citations
+  ☐ Create tag filter dropdown
+  ☐ Add tag display in saved citations list
+  ☐ Implement tag-based search
+  ☐ Add color coding for different tags
+  ☐ Add tag management (rename, delete, merge)
+
+Export/Import:
+  ☐ Add export to JSON functionality
+  ☐ Create import from JSON feature
+  ☐ Add drag-and-drop import support
+  ☐ Add automatic backup feature
+  ☐ Add cloud sync option (optional)
+
+Citation Preview Styles:
+  ☐ Add style selector dropdown
+  ☐ Create academic style preset
+  ☐ Create minimal style preset
+  ☐ Add custom font selector
+  ☐ Add spacing/indentation controls
+  ☐ Add print-friendly view
+  ☐ Create custom style editor
+
+Batch Operations:
+  ☐ Add checkboxes to citations
+  ☐ Add "Select All" option
+  ☐ Implement bulk copy
+  ☐ Implement bulk delete
+  ☐ Add bulk tag application
+  ☐ Add bulk format conversion
+  ☐ Add bulk export option
+
+Future Considerations:
+  ☐ Cloud sync integration
+  ☐ Citation network visualization
+  ☐ PDF annotation support
+  ☐ Integration with reference managers
+  ☐ Citation style preview
+  ☐ Mobile companion app
