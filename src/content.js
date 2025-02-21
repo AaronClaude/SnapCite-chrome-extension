@@ -25,10 +25,16 @@
             if (schemaScript) {
                 try {
                     const schema = JSON.parse(schemaScript.textContent);
-                    if (schema.author) {
-                        authors = Array.isArray(schema.author) ? 
-                            schema.author.map(a => a.name || a) : 
-                            [schema.author.name || schema.author];
+                    // Handle nested @graph structure common in some sites
+                    const items = schema['@graph'] || [schema];
+                    for (const item of items) {
+                        if (item.author || item.creator) {
+                            const authorData = item.author || item.creator;
+                            authors = Array.isArray(authorData) ? 
+                                authorData.map(a => a.name || a) : 
+                                [authorData.name || authorData];
+                            if (authors.length > 0) break;
+                        }
                     }
                 } catch (e) {}
             }
@@ -42,7 +48,14 @@
                     '.author',
                     '.byline',
                     '[rel="author"]',
-                    '[itemprop="author"]'
+                    '[itemprop="author"]',
+                    'meta[name="article:author"]',
+                    'meta[name="sailthru.author"]',
+                    '.p-author',
+                    '.author-name',
+                    '.ArticleAuthor',
+                    '#authors',
+                    '[class*="author" i]' // Case-insensitive class containing "author"
                 ];
 
                 authors = [...new Set(

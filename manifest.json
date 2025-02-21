@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Citation Helper",
-    "version": "1.0",
+    "version": "1.0.1",
     "description": "Extracts citation data from webpages",
     "permissions": ["activeTab", "scripting", "storage", "contextMenus"],
     "content_scripts": [{
